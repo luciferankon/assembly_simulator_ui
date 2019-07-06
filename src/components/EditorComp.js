@@ -17,11 +17,10 @@ export default class EditorComp extends React.Component {
   }
 
   render() {
-    let initialCode = "START\nPRN \"HELLO\"\nSTOP";
     return (
       <CodeMirror editorDidMount={editor => {
         this.editorInstance = editor
-      }} value={this.props.initialCode || initialCode}
+      }} value={this.props.initialCode}
                   options={{lineNumbers: true, lineNumberFormatter: (a) => a * 10}}
                   onChange={(editor, value) => {
                     this.props.onEdit(editor.doc.getValue())

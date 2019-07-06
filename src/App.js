@@ -105,8 +105,8 @@ class App extends Component {
   }
 
   handleCodeEdit(editor) {
-    this.saveCurrentCode();
     this.setState({editor});
+    this.saveCurrentCode();
     this.clearState();
     this.setAsNotExecutingStepWise();
   }
