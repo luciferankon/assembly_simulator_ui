@@ -64,6 +64,19 @@
   grid-column-end: -1;
 }
 
+.assembly-simulator-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.save-button{
+  text-decoration: none;
+  color: $body-text-color;
+}
+.save-button:hover{
+  color: white;
+}
+
 .lineToHighlight {
   background: $highlight-line;
 }

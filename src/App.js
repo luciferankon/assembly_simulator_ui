@@ -54,6 +54,7 @@ class App extends Component {
                 <span className={`menu ${sidebarClassName}`} onClick={this.openMenu}>...</span>
                 <span className="title">Assembly Simulator</span>
               </div>
+              <a className="save-button" download="code.txt" href={"data:text/plain," + this.state.editor}>Save</a>
             </div>
             <div className="code-container">
               <EditorComp initialCode={this.getInitialCode()} highlightLine={this.state.highlightLine}
