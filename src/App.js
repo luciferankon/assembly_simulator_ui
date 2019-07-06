@@ -206,10 +206,17 @@ class App extends Component {
   }
 
   setError(error) {
+    let message = `${error} at ${error.lineNumber}`;
+    let highlightLine = error.lineNumber;
+
+    if(error.name == "MaxInstructionsExceededException") {
+      message = "Potential infinite loop";
+      highlightLine = "";
+    }
+
     this.setState({
-      //TODO:Remove * 10 when fixed the lineNumber problem
-      message: `${error} at ${error.lineNumber}`,
-      highlightLine: error.lineNumber,
+      message: message,
+      highlightLine: highlightLine,
       highlightingClass: highlightErrorClass,
       registerTable: [],
       codeStatus: errorStatus
