@@ -1,7 +1,7 @@
 {
   "name": "assembly_simulaotr_ui",
   "version": "0.1.0",
-  "homepage": "https://luciferankon.github.io/assembly_simulator",
+  "homepage": "https://luciferankon.github.io/assembly_simulator_ui",
   "dependencies": {
     "@craftybones/assembly_simulator": "^0.2.0",
     "babel-core": "^6.26.3",
