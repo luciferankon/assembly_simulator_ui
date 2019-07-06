@@ -69,12 +69,19 @@
   justify-content: space-between;
 }
 
-.save-button{
+.save-load-container{
+  display: flex;
+  justify-content: space-around;
+  width: 10%;
+}
+
+.link-action{
   text-decoration: none;
   color: $body-text-color;
 }
-.save-button:hover{
+.link-action:hover{
   color: white;
+  cursor: pointer;
 }
 
 .lineToHighlight {

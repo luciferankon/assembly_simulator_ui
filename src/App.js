@@ -6,6 +6,7 @@ import helpers from "./helpers";
 import EditorComp from "./components/EditorComp";
 import Prints from "./components/Prints";
 import CustomTable from "./components/CustomTable";
+import LoadButton from "./components/LoadButton";
 import Stack from "./components/Stack";
 import './css/app.scss'
 
@@ -54,10 +55,13 @@ class App extends Component {
                 <span className={`menu ${sidebarClassName}`} onClick={this.openMenu}>...</span>
                 <span className="title">Assembly Simulator</span>
               </div>
-              <a className="save-button" download="code.txt" href={"data:text/plain," + this.state.editor}>Save</a>
+              <div className="save-load-container">
+                <a className="link-action" download="code.txt" href={"data:text/plain," + this.state.editor}>Save</a>
+                <LoadButton className="link-action" handleCodeEdit={this.handleCodeEdit}/>
+              </div>
             </div>
             <div className="code-container">
-              <EditorComp initialCode={this.getInitialCode()} highlightLine={this.state.highlightLine}
+              <EditorComp initialCode={this.state.editor} highlightLine={this.state.highlightLine}
                           highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
               <div className="actions">
                 <button onClick={this.executeStepWise} disabled={this.state.isExecutingStepWise}>Step Into</button>
@@ -89,7 +93,6 @@ class App extends Component {
 
   getInitialCode() {
     window.onbeforeunload = this.saveCurrentCode;
-    window.onrelod = this.saveCurrentCode;
     let cookies = document.cookie.split(';').filter(item => item.includes("assemblyCode"));
     let savedCode = cookies[0];
     if (!savedCode) {
@@ -102,6 +105,7 @@ class App extends Component {
   }
 
   handleCodeEdit(editor) {
+    this.saveCurrentCode();
     this.setState({editor});
     this.clearState();
     this.setAsNotExecutingStepWise();
