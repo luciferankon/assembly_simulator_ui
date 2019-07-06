@@ -61,7 +61,7 @@ class App extends Component {
               </div>
             </div>
             <div className="code-container">
-              <EditorComp initialCode={this.state.editor} highlightLine={this.state.highlightLine}
+              <EditorComp initialCode={this.getInitialCode()} highlightLine={this.state.highlightLine}
                           highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
               <div className="actions">
                 <button onClick={this.executeStepWise} disabled={this.state.isExecutingStepWise}>Step Into</button>
@@ -106,7 +106,6 @@ class App extends Component {
 
   handleCodeEdit(editor) {
     this.setState({editor});
-    this.saveCurrentCode();
     this.clearState();
     this.setAsNotExecutingStepWise();
   }
