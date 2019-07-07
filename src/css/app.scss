@@ -69,17 +69,18 @@
   justify-content: space-between;
 }
 
-.save-load-container{
+.save-load-container {
   display: flex;
   justify-content: space-around;
   width: 10%;
 }
 
-.link-action{
+.link-action {
   text-decoration: none;
   color: $body-text-color;
-}
-.link-action:hover{
+} 
+
+.link-action:hover {
   color: white;
   cursor: pointer;
 }
@@ -90,4 +91,45 @@
 
 .errorLine {
   background-color: $error-color;
+}
+
+.save-code-overlay {
+  height: 30%;
+  width: 20%;
+
+  position: fixed; 
+  
+  top: 20%; 
+  left: 40%;
+
+  border-radius: 3%;
+
+  background-color: #181b2e; 
+  z-index: 1; 
+
+  
+}
+
+.save-button {
+  border: 0px;
+
+  font-size: inherit;
+  color: inherit;
+  background: inherit;
+}
+
+.filename-input {
+  position: relative;
+
+  left: 30%;
+  top: 35%;
+}
+
+.save-button:focus {
+  outline: none;
+}
+
+.save-button:hover {
+  color: white;
+  cursor: pointer;
 }
