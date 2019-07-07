@@ -12,7 +12,6 @@ export default class SaveDialogueBox extends Component {
   }
 
   render() {
-    console.log(this.props.display)
     return (
       <div className="save-code-overlay" style={{display:this.getDisplay()}}>
         <button className="save-button save-dialogue-box-close-button" onClick={this.props.toggleDisplay}>

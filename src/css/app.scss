@@ -1,9 +1,9 @@
-@import "./variable";
+@import './variable';
 // Node modules
-@import "~codemirror/lib/codemirror.css";
-@import "./code-editor-override";
-@import "./global";
-@import "./header";
+@import '~codemirror/lib/codemirror.css';
+@import './code-editor-override';
+@import './global';
+@import './header';
 
 .registerTable {
   text-align: center;
@@ -64,7 +64,7 @@
   grid-column-end: -1;
 }
 
-.assembly-simulator-header{
+.assembly-simulator-header {
   display: flex;
   justify-content: space-between;
 }
@@ -78,7 +78,7 @@
 .link-action {
   text-decoration: none;
   color: $body-text-color;
-} 
+}
 
 .link-action:hover {
   color: white;
@@ -91,6 +91,22 @@
 
 .errorLine {
   background-color: $error-color;
+}
+
+.sidebar {
+  height: 100%;
+  width: $sidebar-width;
+  position: absolute;
+  z-index: 26;
+  background-color: rgb(40, 40, 40);
+  overflow-x: hidden;
+  border-right: 2px solid $body-text-color;
+  transition: width 0.5s;
+}
+
+.sidebar-closed {
+  width: 0px;
+  border: none;
 }
 
 .save-code-overlay {

@@ -3,6 +3,7 @@
 .code-container {
   border-right: $app-separator solid 1px;
   border-bottom: $app-separator solid 1px;
+  position: relative;
 }
 
 .CodeMirror {

@@ -9,6 +9,7 @@ import EditorComp from "./components/EditorComp";
 import Prints from "./components/Prints";
 import CustomTable from "./components/CustomTable";
 import LoadButton from "./components/LoadButton";
+import Sidebar from "./components/Sidebar";
 import Stack from "./components/Stack";
 import SaveCodeDialogueBox from "./components/SaveCodeDialogueBox";
 
@@ -32,6 +33,7 @@ class App extends Component {
       highlightingClass: highlightingClass,
       isSidebarOpen: false,
       codeStatus: successStatus,
+      maxLinesToExecute: 100,
       isDialogueVisible : false
     };
     this.executeCode = this.executeCode.bind(this);
@@ -44,11 +46,13 @@ class App extends Component {
     this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.saveCurrentCode = this.saveCurrentCode.bind(this);
+
+    this.maxLinesToExecuteSliderRef = React.createRef();
     this.toggleSaveCodeDialogue = this.toggleSaveCodeDialogue.bind(this);
   }
 
   openMenu() {
-    this.setState({isSidebarOpen: !this.state.isSidebarOpen})
+    this.setState({isSidebarOpen: !this.state.isSidebarOpen});
   }
 
   render() {
@@ -67,6 +71,7 @@ class App extends Component {
               </div>
             </div>
             <div className="code-container">
+            <Sidebar className="sidebar" isOpened={this.state.isSidebarOpen} sliderRef={this.maxLinesToExecuteSliderRef}/>
               <EditorComp initialCode={this.getInitialCode()} highlightLine={this.state.highlightLine}
                           highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
               <div className="actions">
@@ -151,6 +156,7 @@ class App extends Component {
     let numberedCode = lines.map((l, i) => `${(i + 1) * 10} ${l.trim()}`).join("\n");
     let machine = this.state.machine;
     try {
+      machine.setMaxLinesToExecute(this.maxLinesToExecuteSliderRef.current.value);
       machine.load(numberedCode);
       machine.execute();
       this.setAsNotExecutingStepWise();
