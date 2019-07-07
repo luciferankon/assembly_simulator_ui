@@ -8,11 +8,13 @@ export default class SaveDialogueBox extends Component {
     this.props = props;
     this.state = { fileName: "" };
     this.updateInputValue = this.updateInputValue.bind(this);
+    this.getDisplay = this.getDisplay.bind(this);
   }
 
   render() {
+    console.log(this.props.display)
     return (
-      <div className="save-code-overlay">
+      <div className="save-code-overlay" style={{display:this.getDisplay()}}>
         <button className="save-button save-dialogue-box-close-button" onClick={this.props.toggleDisplay}>
           x
         </button>
@@ -31,6 +33,10 @@ export default class SaveDialogueBox extends Component {
         </a>
       </div>
     );
+  }
+
+  getDisplay(){
+    return this.props.display ? "flex" : "none";
   }
 
   updateInputValue(evt) {

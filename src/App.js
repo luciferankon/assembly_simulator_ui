@@ -32,7 +32,7 @@ class App extends Component {
       highlightingClass: highlightingClass,
       isSidebarOpen: false,
       codeStatus: successStatus,
-      saveCodeDialogueEnabled: false
+      isDialogueVisible : false
     };
     this.executeCode = this.executeCode.bind(this);
     this.executeStepWise = this.executeStepWise.bind(this);
@@ -87,12 +87,7 @@ class App extends Component {
                            onClickOfRow={this.showStackForLine}/>
               <Stack stack={this.state.stack}/>
             </div>
-            {this.state.saveCodeDialogueEnabled ? (
-              <SaveCodeDialogueBox toggleDisplay= {this.toggleSaveCodeDialogue}
-                                   editor= {this.state.editor}/>
-            ) : (
-              ""
-            )}
+            <SaveCodeDialogueBox display={this.state.isDialogueVisible} toggleDisplay={this.toggleSaveCodeDialogue} editor= {this.state.editor}/>
           </div>
         
         </div>
@@ -100,10 +95,9 @@ class App extends Component {
   }
 
   toggleSaveCodeDialogue(){
-    this.setState((state)=>(
-      {saveCodeDialogueEnabled: !state.saveCodeDialogueEnabled}
-      )
-    )}
+    const display = !this.state.isDialogueVisible;
+    this.setState({isDialogueVisible : display})
+  }
 
   saveCurrentCode() {
     let editor = this.state.editor;
