@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+
+import {highlightErrorClass, highlightingClass, INITIALCODE, INITIALMESSAGE} from "./constants";
+
 import MessageBox from "./components/MessageBox";
 import Machine from '@craftybones/assembly_simulator';
-import {highlightErrorClass, highlightingClass, INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
 import EditorComp from "./components/EditorComp";
 import Prints from "./components/Prints";
@@ -9,7 +11,9 @@ import CustomTable from "./components/CustomTable";
 import LoadButton from "./components/LoadButton";
 import Sidebar from "./components/Sidebar";
 import Stack from "./components/Stack";
-import './css/app.scss'
+import SaveCodeDialogueBox from "./components/SaveCodeDialogueBox";
+
+
 
 const successStatus = "success";
 const errorStatus = "error";
@@ -29,7 +33,8 @@ class App extends Component {
       highlightingClass: highlightingClass,
       isSidebarOpen: false,
       codeStatus: successStatus,
-      maxLinesToExecute: 100
+      maxLinesToExecute: 100,
+      isDialogueVisible : false
     };
     this.executeCode = this.executeCode.bind(this);
     this.executeStepWise = this.executeStepWise.bind(this);
@@ -43,6 +48,7 @@ class App extends Component {
     this.saveCurrentCode = this.saveCurrentCode.bind(this);
 
     this.maxLinesToExecuteSliderRef = React.createRef();
+    this.toggleSaveCodeDialogue = this.toggleSaveCodeDialogue.bind(this);
   }
 
   openMenu() {
@@ -60,7 +66,7 @@ class App extends Component {
                 <span className="title">Assembly Simulator</span>
               </div>
               <div className="save-load-container">
-                <a className="link-action" download="code.txt" href={"data:text/plain," + this.state.editor}>Save</a>
+                <button className="save-button" onClick= {this.toggleSaveCodeDialogue} >Save</button>
                 <LoadButton className="link-action" handleCodeEdit={this.handleCodeEdit}/>
               </div>
             </div>
@@ -73,6 +79,8 @@ class App extends Component {
                 <button onClick={this.executeCode}>Run</button>
                 <button onClick={this.executeNextLine} disabled={!this.state.isExecutingStepWise}>Next</button>
               </div>
+              <div>
+            </div>
               <MessageBox message={this.state.message} className={this.state.codeStatus}/>
             </div>
             <div className="output-container">
@@ -84,9 +92,16 @@ class App extends Component {
                            onClickOfRow={this.showStackForLine}/>
               <Stack stack={this.state.stack}/>
             </div>
+            <SaveCodeDialogueBox display={this.state.isDialogueVisible} toggleDisplay={this.toggleSaveCodeDialogue} editor= {this.state.editor}/>
           </div>
+        
         </div>
     );
+  }
+
+  toggleSaveCodeDialogue(){
+    const display = !this.state.isDialogueVisible;
+    this.setState({isDialogueVisible : display})
   }
 
   saveCurrentCode() {
@@ -95,7 +110,7 @@ class App extends Component {
     editor = helpers.replaceInString(editor, ";", "{{{{:}}}}");
     document.cookie = "assemblyCode=" + editor;
   }
-
+  
   getInitialCode() {
     window.onbeforeunload = this.saveCurrentCode;
     let cookies = document.cookie.split(';').filter(item => item.includes("assemblyCode"));
