@@ -69,17 +69,18 @@
   justify-content: space-between;
 }
 
-.save-load-container{
+.save-load-container {
   display: flex;
   justify-content: space-around;
   width: 10%;
 }
 
-.link-action{
+.link-action {
   text-decoration: none;
   color: $body-text-color;
-}
-.link-action:hover{
+} 
+
+.link-action:hover {
   color: white;
   cursor: pointer;
 }
@@ -90,4 +91,66 @@
 
 .errorLine {
   background-color: $error-color;
+}
+
+.save-code-overlay {
+  height: 30%;
+  width: 20%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: fixed; 
+  
+  top: 20%; 
+  left: 40%;
+
+  border-radius: 3%;
+
+  background-color: #181b2e; 
+  z-index: 1; 
+}
+
+.save-button {
+  border: 0px;
+
+  font-size: inherit;
+  color: inherit;
+  background: inherit;
+}
+
+.save-button:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.save-button:focus {
+  outline: none;
+}
+
+.filename-input {
+  height: 20%; 
+  width: 70%;
+
+  margin-top: 10%;
+  margin-bottom: 10%;
+
+  border: none;
+  border-bottom: 1px solid $body-text-color;
+
+  background: inherit;
+
+  font-size: 15px;
+  color: $body-text-color;
+}
+
+.filename-input:focus {
+  outline: none;
+}
+
+.save-dialogue-box-close-button  {
+  position: relative;
+  top: 0%;
+  left: 45%;
 }
