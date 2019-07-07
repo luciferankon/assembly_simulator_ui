@@ -7,6 +7,7 @@ import EditorComp from "./components/EditorComp";
 import Prints from "./components/Prints";
 import CustomTable from "./components/CustomTable";
 import LoadButton from "./components/LoadButton";
+import Sidebar from "./components/Sidebar";
 import Stack from "./components/Stack";
 import './css/app.scss'
 
@@ -42,7 +43,7 @@ class App extends Component {
   }
 
   openMenu() {
-    this.setState({isSidebarOpen: !this.state.isSidebarOpen})
+    this.setState({isSidebarOpen: !this.state.isSidebarOpen});
   }
 
   render() {
@@ -61,6 +62,7 @@ class App extends Component {
               </div>
             </div>
             <div className="code-container">
+            <Sidebar className="sidebar" isOpened={this.state.isSidebarOpen} />
               <EditorComp initialCode={this.getInitialCode()} highlightLine={this.state.highlightLine}
                           highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
               <div className="actions">
