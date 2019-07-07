@@ -11,9 +11,9 @@ class LoadButton extends Component {
     this.handleFileRead = this.handleFileRead.bind(this);
   }
 
-  handleFileRead() {
+  handleFileRead(){
     const fileContent = this.fileReader.result;
-    this.props.handleCodeEdit(fileContent);
+    this.props.loadCode(fileContent);
   }
 
   handleFileChosen(e) {

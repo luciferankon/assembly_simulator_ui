@@ -46,6 +46,7 @@ class App extends Component {
     this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.saveCurrentCode = this.saveCurrentCode.bind(this);
+    this.loadCode = this.loadCode.bind(this);
 
     this.maxLinesToExecuteSliderRef = React.createRef();
     this.toggleSaveCodeDialogue = this.toggleSaveCodeDialogue.bind(this);
@@ -67,7 +68,7 @@ class App extends Component {
               </div>
               <div className="save-load-container">
                 <button className="save-button" onClick= {this.toggleSaveCodeDialogue} >Save</button>
-                <LoadButton className="link-action" handleCodeEdit={this.handleCodeEdit}/>
+                <LoadButton className="link-action" loadCode={this.loadCode}/>
               </div>
             </div>
             <div className="code-container">
@@ -99,6 +100,17 @@ class App extends Component {
     );
   }
 
+  persistCode(code) {
+    let editor = helpers.replaceInString(code, "\n", "{{{{,}}}}");
+    editor = helpers.replaceInString(editor, ";", "{{{{:}}}}");
+    document.cookie = "assemblyCode=" + editor;
+  }
+
+  loadCode(code){
+    this.persistCode(code);
+    this.handleCodeEdit(code);  
+  }
+
   toggleSaveCodeDialogue(){
     const display = !this.state.isDialogueVisible;
     this.setState({isDialogueVisible : display})
@@ -106,9 +118,7 @@ class App extends Component {
 
   saveCurrentCode() {
     let editor = this.state.editor;
-    editor = helpers.replaceInString(editor, "\n", "{{{{,}}}}");
-    editor = helpers.replaceInString(editor, ";", "{{{{:}}}}");
-    document.cookie = "assemblyCode=" + editor;
+    this.persistCode(editor);
   }
   
   getInitialCode() {
