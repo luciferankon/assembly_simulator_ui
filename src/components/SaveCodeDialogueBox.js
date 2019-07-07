@@ -13,6 +13,9 @@ export default class SaveDialogueBox extends Component {
   render() {
     return (
       <div className="save-code-overlay">
+        <button className="save-button save-dialogue-box-close-button" onClick={this.props.toggleDisplay}>
+          x
+        </button>
         <input
           className="filename-input"
           value={this.state.fileName}
