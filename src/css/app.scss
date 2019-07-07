@@ -94,14 +94,16 @@
 
 .sidebar {
   height: 100%;
-  width: 0;
+  width: $sidebar-width;
   position: absolute;
   z-index: 26;
-  background-color: #222;
+  background-color: rgb(40, 40, 40);
   overflow-x: hidden;
-  transition: 0.5s;
+  border-right: 2px solid $body-text-color;
+  transition: width 0.5s;
 }
 
-.sidebar-opened {
-  width: 200px;
+.sidebar-closed {
+  width: 0px;
+  border: none;
 }

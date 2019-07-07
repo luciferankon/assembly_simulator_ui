@@ -28,7 +28,8 @@ class App extends Component {
       highlightLine: 0,
       highlightingClass: highlightingClass,
       isSidebarOpen: false,
-      codeStatus: successStatus
+      codeStatus: successStatus,
+      maxLinesToExecute: 100
     };
     this.executeCode = this.executeCode.bind(this);
     this.executeStepWise = this.executeStepWise.bind(this);
@@ -40,6 +41,8 @@ class App extends Component {
     this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.saveCurrentCode = this.saveCurrentCode.bind(this);
+
+    this.maxLinesToExecuteSliderRef = React.createRef();
   }
 
   openMenu() {
@@ -62,7 +65,7 @@ class App extends Component {
               </div>
             </div>
             <div className="code-container">
-            <Sidebar className="sidebar" isOpened={this.state.isSidebarOpen} />
+            <Sidebar className="sidebar" isOpened={this.state.isSidebarOpen} sliderRef={this.maxLinesToExecuteSliderRef}/>
               <EditorComp initialCode={this.getInitialCode()} highlightLine={this.state.highlightLine}
                           highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
               <div className="actions">
@@ -138,6 +141,7 @@ class App extends Component {
     let numberedCode = lines.map((l, i) => `${(i + 1) * 10} ${l.trim()}`).join("\n");
     let machine = this.state.machine;
     try {
+      machine.setMaxLinesToExecute(this.maxLinesToExecuteSliderRef.current.value);
       machine.load(numberedCode);
       machine.execute();
       this.setAsNotExecutingStepWise();
