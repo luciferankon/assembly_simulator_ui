@@ -1,23 +1,33 @@
 import React, { Component } from 'react';
 
 class SidebarItemWithSlider extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
+    this.state = { sliderValue: 100 };
+    this.handleSliderChange = this.handleSliderChange.bind(this);
   }
 
-  render(){
-    return (<div>
-    <span style={{ fontSize: '16px' }}>
-      {this.props.title}
-    </span>
-      <input
-        style={{ width: '70%', position: 'relative', left: '15%' }}
-        type="range"
-        min={this.props.min}
-        max={this.props.max}
-        ref={this.props.sliderRef}
-      />
-  </div>)
+  handleSliderChange(event) {
+    this.setState({ sliderValue: event.target.value });
+  }
+
+  render() {
+    return (
+      <div>
+        <span className="sidebar-item-title">{this.props.title}</span>
+        <div className="sidebar-item-slider">
+          <input
+            type="range"
+            min={this.props.min}
+            max={this.props.max}
+            ref={this.props.sliderRef}
+            onChange={this.handleSliderChange}
+            onInput={this.handleSliderChange}
+          />
+          <span>{this.state.sliderValue}</span>
+        </div>
+      </div>
+    );
   }
 }
 
