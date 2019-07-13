@@ -1,35 +1,68 @@
-import React from "react"
-import {highlightingClass} from "../constants";
+import React from 'react';
+import { highlightingClass } from '../constants';
 
 function getClassName(row) {
-  return (row.hasChanged) ? highlightingClass : null;
+  return row.hasChanged ? highlightingClass : null;
 }
 
-const createRow = (row, headers, onClickOfRow) => {
-  let cols = headers.map((header) => <td className={header.header + "Class"}>{row[header.accessor]}</td>);
-  return (<tr className={getClassName(row)} onClick={onClickOfRow.bind(null, row)}>{cols}</tr>);
-};
+export default class TraceTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.createRow = this.createRow.bind(this);
+    this.tableEndRef = React.createRef();
+  }
 
-const createHeader = (headers, onClickOfHeader) => {
-  let cols = headers.map((header) => {
-    return <th onClick={onClickOfHeader}
-               id={header.header}>{header.header}</th>;
-  });
-  return (<thead>
-  <tr>{cols}</tr>
-  </thead>)
-};
+  createRow(row) {
+    let cols = this.props.headers.map(header => (
+      <td className={header.header + 'Class'}>{row[header.accessor]}</td>
+    ));
+    return (
+      <tr className={getClassName(row)} onClick={this.props.onClickOfRow.bind(null, row)}>
+        {cols}
+      </tr>
+    );
+  };
 
-export default (props) => {
-  let {rows, headers, onClickOfHeader, className, onClickOfRow} = props;
-  const tableRows = rows.map((row) => createRow(row, headers, onClickOfRow));
-  const tableHeaders = createHeader(headers, onClickOfHeader);
+  createHeader(){
+    let cols = this.props.headers.map(header => {
+      return (
+        <th onClick={this.props.onClickOfHeader} id={header.header}>
+          {header.header}
+        </th>
+      );
+    });
+    return (
+      <thead>
+        <tr>{cols}</tr>
+      </thead>
+    );
+  };
 
-  return (
+  scrollTableToBottom(){
+    this.tableEndRef.current.scrollIntoView({behavior: "smooth"});
+  }
+
+  componentDidMount(){
+    this.scrollTableToBottom();
+  }
+
+  componentDidUpdate(){
+    this.scrollTableToBottom();
+  }
+
+  render() {
+    let { rows, className } = this.props;
+    const tableRows = rows.map(this.createRow);
+    const tableHeaders = this.createHeader();
+
+    return (
       <div className="result-table">
-        <table className={className}>{tableHeaders}
+        <table className={className}>
+          {tableHeaders}
           <tbody>{tableRows}</tbody>
         </table>
+        <div ref={this.tableEndRef}></div>
       </div>
-  );
+    );
+  }
 }

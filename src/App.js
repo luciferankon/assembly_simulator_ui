@@ -44,26 +44,35 @@ class App extends Component {
     this.handleCodeEdit = this.handleCodeEdit.bind(this);
     this.showStackForLine = this.showStackForLine.bind(this);
     this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
-    this.openMenu = this.openMenu.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
+    this.closeSidebar = this.closeSidebar.bind(this);
     this.saveCurrentCode = this.saveCurrentCode.bind(this);
     this.loadCode = this.loadCode.bind(this);
 
     this.maxLinesToExecuteSliderRef = React.createRef();
     this.toggleSaveCodeDialogue = this.toggleSaveCodeDialogue.bind(this);
+    this.sidbarRef = React.createRef();
   }
 
-  openMenu() {
+  toggleMenu() {
     this.setState({isSidebarOpen: !this.state.isSidebarOpen});
+  }
+
+  closeSidebar(event) {
+    if (!this.state.isSidebarOpen) return;
+    const { target } = event;
+    if(this.sidbarRef.current.contains(target)) return;
+    this.setState({isSidebarOpen: false});
   }
 
   render() {
     const sidebarClassName = this.state.isSidebarOpen ? 'active' : '';
     return (
-        <div className="app">
+        <div className="app" onClick={this.closeSidebar}>
           <div className="assembly-simulator-container">
             <div className="assembly-simulator-header">
               <div className="header-title-action">
-                <span className={`menu ${sidebarClassName}`} onClick={this.openMenu}>...</span>
+                <span className={`menu ${sidebarClassName}`} onClick={this.toggleMenu}>...</span>
                 <span className="title">Assembly Simulator</span>
               </div>
               <div className="save-load-container">
@@ -72,7 +81,7 @@ class App extends Component {
               </div>
             </div>
             <div className="code-container">
-            <Sidebar className="sidebar" isOpened={this.state.isSidebarOpen} sliderRef={this.maxLinesToExecuteSliderRef}/>
+            <Sidebar sidebarRef={this.sidbarRef} className="sidebar" isOpened={this.state.isSidebarOpen} sliderRef={this.maxLinesToExecuteSliderRef}/>
               <EditorComp initialCode={this.getInitialCode()} highlightLine={this.state.highlightLine}
                           highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
               <div className="actions">
