@@ -13,6 +13,12 @@
   border-bottom: $app-separator solid 1px;
 }
 
+.CodeMirror-cursor {
+  border-left: 1px solid $body-text-color;
+  border-right: none;
+  width: 0;
+}
+
 .CodeMirror-gutter {
   background: lighten($body-background, 5%);
 }
